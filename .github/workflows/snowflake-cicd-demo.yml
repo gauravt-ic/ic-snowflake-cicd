@@ -36,10 +36,11 @@ jobs:
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SF_ROLE }}
+          SNOWFLAKE_USER: ${{ secrets.SF_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
           SNOWFLAKE_DATABASE: ${{ secrets.SF_DATABASE }}
-          SNOWFLAKE_SCHEMA: ${{ secrets.SF_DATABASE }}
+          SNOWFLAKE_SCHEMA: ${{ secrets.SF_SCHEMA }}
+          SNOWFLAKE_ROLE: ${{ secrets.SF_ROLE }}
         run: |
           ./liquibase --version
 
@@ -71,10 +72,11 @@ jobs:
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SF_ROLE }}
+          SNOWFLAKE_USER: ${{ secrets.SF_USER }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
           SNOWFLAKE_DATABASE: ${{ secrets.SF_DATABASE }}
-          SNOWFLAKE_SCHEMA: ${{ secrets.SF_DATABASE }}
+          SNOWFLAKE_SCHEMA: ${{ secrets.SF_SCHEMA }}
+          SNOWFLAKE_ROLE: ${{ secrets.SF_ROLE }}
         run: |
           ./liquibase --version
 
