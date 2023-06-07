@@ -3,7 +3,7 @@ name: snowflake-cicd-demo
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'migrations/**'
   workflow_dispatch:
