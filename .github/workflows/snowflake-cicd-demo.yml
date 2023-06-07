@@ -32,7 +32,7 @@ jobs:
       - name: Install Snowflake JDBC driver
         run: |
           wget -q https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.13.8/snowflake-jdbc-3.13.8.jar
-          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/liquibase/lib/
+          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/
 
       - name: Apply database changes
         env:
