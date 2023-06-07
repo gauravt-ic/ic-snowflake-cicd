@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'migrations/**'
+      - 'changesets/**'
   workflow_dispatch:
 
 jobs:
@@ -27,22 +27,29 @@ jobs:
           wget -q https://github.com/liquibase/liquibase/releases/download/v4.5.0/liquibase-4.5.0.tar.gz
           tar xf liquibase-4.5.0.tar.gz
           rm liquibase-4.5.0.tar.gz
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/liquibase/lib/
           chmod +x liquibase
 
       - name: Install Snowflake JDBC driver
         run: |
           wget -q https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.13.8/snowflake-jdbc-3.13.8.jar
-
+        
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SF_USER }}
+          SNOWFLAKE_USER: ${{ secrets.SF_USERNAME }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
           SNOWFLAKE_DATABASE: ${{ secrets.SF_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SF_SCHEMA }}
           SNOWFLAKE_ROLE: ${{ secrets.SF_ROLE }}
         run: |
+          echo "Step 1: Checking Liquibase Version"
           ./liquibase --version
+          echo "Step 2: Checking GitHub Workspace Directory"
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+
+
 
   deploy-changes-in-prod:
     runs-on: ubuntu-latest
@@ -72,7 +79,7 @@ jobs:
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
-          SNOWFLAKE_USER: ${{ secrets.SF_USER }}
+          SNOWFLAKE_USER: ${{ secrets.SF_USERNAME }}
           SNOWFLAKE_PASSWORD: ${{ secrets.SF_PASSWORD }}
           SNOWFLAKE_DATABASE: ${{ secrets.SF_DATABASE }}
           SNOWFLAKE_SCHEMA: ${{ secrets.SF_SCHEMA }}
