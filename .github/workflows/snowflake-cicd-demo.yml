@@ -26,14 +26,12 @@ jobs:
         run: |
           wget -q https://github.com/liquibase/liquibase/releases/download/v4.5.0/liquibase-4.5.0.tar.gz
           tar xf liquibase-4.5.0.tar.gz
-          ll 
           rm liquibase-4.5.0.tar.gz
           chmod +x liquibase
 
       - name: Install Snowflake JDBC driver
         run: |
           wget -q https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.13.8/snowflake-jdbc-3.13.8.jar
-          mv snowflake-jdbc-3.13.8.jar liquibase/lib/
 
       - name: Apply database changes
         env:
