@@ -27,14 +27,13 @@ jobs:
           wget -q https://github.com/liquibase/liquibase/releases/download/v4.5.0/liquibase-4.5.0.tar.gz
           tar xf liquibase-4.5.0.tar.gz
           rm liquibase-4.5.0.tar.gz
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/liquibase/lib/
           chmod +x liquibase
 
       - name: Install Snowflake JDBC driver
         run: |
           wget -q https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.13.8/snowflake-jdbc-3.13.8.jar
-        
+          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/liquibase/lib/
+
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
