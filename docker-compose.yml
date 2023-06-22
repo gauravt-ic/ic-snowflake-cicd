@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  consul:
+    image: consul
+    container_name: consul
+    networks:
+      - vault-network
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    networks:
+      - vault-network
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+    volumes:
+      - ./data/mysql-data:/var/lib/mysql
+
+  vault:
+    image: vault
+    container_name: vault
+    ports:
+      - 8200:8200
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=<root_token>
+      - VAULT_ADDR=http://vault:8200
+      - VAULT_STORAGE_BACKEND=mysql
+      - VAULT_MYSQL_USERNAME=root
+      - VAULT_MYSQL_PASSWORD=<mysql_root_password>
+      - VAULT_MYSQL_ADDRESS=mysql:3306
+      - VAULT_MYSQL_DATABASE=vault
+      - VAULT_UI=true
+    volumes:
+      - ./data/vault-data:/vault/file
+    networks:
+      - vault-network
+
+networks:
+  vault-network:
