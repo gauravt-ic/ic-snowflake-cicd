@@ -32,8 +32,7 @@ jobs:
       - name: Install Snowflake JDBC driver
         run: |
           wget -q https://repo1.maven.org/maven2/net/snowflake/snowflake-jdbc/3.13.8/snowflake-jdbc-3.13.8.jar
-          mv snowflake-jdbc-3.13.8.jar $GITHUB_WORKSPACE/
-
+          
       - name: Apply database changes
         env:
           SNOWFLAKE_ACCOUNT: ${{ secrets.SF_ACCOUNT }}
@@ -47,7 +46,8 @@ jobs:
           ./liquibase --version
           echo "Step 2: Checking GitHub Workspace Directory"
           echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-
+          echo "Step 3: Deploy DB Changes"
+          
 
 
   deploy-changes-in-prod:
